@@ -2,17 +2,9 @@
 #define CHARACTERS_H
 
 #include <string>
-
 #include <raylib.h>
 
-////////MOVER DE ACA
-enum Direction {
-	NORTH = 0,
-	EAST,
-	SOUTH,
-	WEST
-};
-///////
+#include "game_utils.h"
 
 //--------------------------
 // CHARACTERS TYPES
@@ -22,9 +14,9 @@ struct Character {
 	Vector2 position;
 	bool isMoving;
 
-	//Moves the characters n cells in x direction.
+	//Moves the characters n steps in x direction.
 	//Returns false if the character couldn't move.
-	bool move(Direction direction, int cells);
+	bool move(CardinalDirection direction, int steps);
 };
 
 struct Player : Character {};

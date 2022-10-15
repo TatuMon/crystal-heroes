@@ -2,7 +2,7 @@
 
 #include "characters.h"
 
-bool Character::move(Direction direction, int cell) {
+bool Character::move(CardinalDirection direction, int steps) {
 
 
 	return false;
