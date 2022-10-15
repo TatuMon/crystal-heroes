@@ -2,14 +2,13 @@
 #include <string>
 
 #include "characters.h"
+#include "screen.h"
+#include "game_utils.h"
+
+GameUtils::GameManager gameManager;
 
 int main(){
-	InitWindow(800, 600, "Crystal Heroe");
-	SetTargetFPS(60);
-
-	InitAudioDevice();
-	SetMasterVolume(masterVolume);
-	SetMusicVolume(currentBGM, musicVolume);
+	gameManager.initGame();
 
 	//SetExitKey(NULL); //Disable ESC key to exit the game
 	while (!WindowShouldClose()) {
