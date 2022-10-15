@@ -3,28 +3,49 @@
 #include "game_utils.h"
 #include "screen.h"
 
-GameUtils::GameManager::GameManager() {}
+typedef GameUtils::GameManager GameManager;
 
-void GameUtils::GameManager::initGame() {
+GameManager::GameManager() {
 	TitleScreen initialScreen;
 	this->currentScreen = initialScreen;
 
+	this->currentBGM = LoadMusicStream("/resources/music/0_Menu_Master.ogg");
+}
+
+void GameManager::initGame() {
 	InitWindow(800, 600, "Crystal Heroe");
 	SetTargetFPS(60);
-
+	SetExitKey(NULL); //Disable ESC key to exit the game
 	InitAudioDevice();
 	SetMasterVolume(this->masterVolume);
 	SetMusicVolume(this->currentBGM, musicVolume);
+	this->initInputThread();
 }
 
-void GameUtils::GameManager::initTransition(Screen newScreen) {
+void GameManager::closeGame() {
+	this->joinInputThread();
+	StopMusicStream(this->currentBGM);
+	UnloadMusicStream(this->currentBGM);
+	CloseAudioDevice();
+	CloseWindow();
+}
+
+void GameManager::initTransition(Screen newScreen) {
 	this->onTransition = true;
 	this->fromScreen = &currentScreen;
 	this->toScreen = newScreen;
 }
 
-bool GameUtils::GameManager::updateTransition() {
+bool GameManager::updateTransition() {
 	//See how the pre-make does it
 
 	return false;
+}
+
+void GameManager::initInputThread() {
+	this->inputThread = std::thread([]() {/* READ INPUT */});
+}
+
+void GameManager::joinInputThread() {
+	this->inputThread.join();
 }

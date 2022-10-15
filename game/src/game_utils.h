@@ -1,6 +1,8 @@
 #ifndef GAME_UTILS_H
 #define GAME_UTILS_H
 
+#include <thread>
+
 #include "screen.h"
 #include "raylib.h"
 
@@ -25,15 +27,21 @@ namespace GameUtils {
 		GameManager();
 
 		void initGame();
+		void closeGame();
 
 		void initTransition(Screen newScreen);
 		//Returns true if the transition finished
 		bool updateTransition();
+		void changeBGM(Music newMusic);
+		void readInput();
 		
 	private:
+		std::thread inputThread;
 		Screen* fromScreen = NULL;
 		Screen toScreen;
 
+		void initInputThread();
+		void joinInputThread();
 	};
 }
 

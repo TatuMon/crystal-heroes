@@ -1,5 +1,6 @@
 #include <raylib.h>
 #include <string>
+#include <thread>
 
 #include "characters.h"
 #include "screen.h"
@@ -10,36 +11,11 @@ GameUtils::GameManager gameManager;
 int main(){
 	gameManager.initGame();
 
-	//SetExitKey(NULL); //Disable ESC key to exit the game
 	while (!WindowShouldClose()) {
-		ClearBackground(RAYWHITE);
-
-		switch (currentScreen)
-		{
-			case TITLE_SCREEN:
-				DrawTitleScreen();
-				break;
-
-			case OPTIONS_SCREEN:
-				DrawOptionsScreen();
-				break;
-
-			case PLAY_SCREEN:
-				DrawPlayScreen();
-				break;
-
-			case GAME_OVER_SCREEN:
-				DrawGameOverScreen();
-				break;
-
-			default:
-				break;
+		if (!gameManager.onPause) {
+			gameManager.currentScreen.drawScreen();
 		}
 	}
 
-	StopMusicStream(currentBGM);
-
-	CloseAudioDevice();
-	CloseWindow();
-
+	gameManager.closeGame();
 }
